@@ -1,48 +1,78 @@
-card_scores = { 'A' => [1, 11], 'K' => 10, 'Q' => 10, 'J' => 10, 
+require_relative "bj_player.rb"
+require_relative "bj_dealer.rb"
+
+CARD_VALUES = { 'A' => [1, 11], 'K' => 10, 'Q' => 10, 'J' => 10, 
 '10' => 10, '9' => 9, '8' => 8, '7' => 7, '6' => 6, 
-'5' => 5, '4' => 4, '3' => 3, '2' => 2, '1' => 1 }
-# how to make it so there are 4 of each card? hashes have unique keys
-#could do 'AD' 'AS' 'AH' 'AC'
-suits = ['D', 'H', 'S', 'C']
+'5' => 5, '4' => 4, '3' => 3, '2' => 2 }
 
-ALL_CARDS = Hash.new
-suits.each do |suit|
-    card_scores.each do |k, v|
-        ALL_CARDS[k + suit] = v
+SUITS = ['D', 'H', 'S', 'C']
+
+# ALL_CARDS = Hash.new
+# SUITS.each do |suit|
+#     CARD_VALUES.each do |k, v|
+#         ALL_CARDS[k + suit] = v
+#     end
+# end
+
+
+#Black Jack class
+# instance vars = @deck(via generate_deck Class#method), @dealer, @player
+# instance methods = deal(will use hit intance method 
+# - give cards to dealer and player and remove them from the ALL CARDS - use .shuffle and deal first card in deck)
+# instance method = win, lose, bust, hit, play(initialize game), 
+# inst method(after every round need to check num_cards to see if > .33 * num_cards)
+
+
+class BlackJack
+
+    def self.generate_deck
+        all_cards = Hash.new
+        SUITS.each do |suit|
+            CARD_VALUES.each do |k, v|
+                all_cards[k + suit] = v
+            end
+        end
+        cards_arr = all_cards.keys
+        cards_arr.shuffle
     end
-end
 
-p ALL_CARDS
-
-
-
-
-def game_play
-    
-    max_score = 21
-
-    cards_arr = ALL_CARDS.keys
-    player_hand = cards_arr.sample(2)
-    p player_hand
-    dealer_hand = cards_arr.sample(2)
-
-    player_score = player_hand.each {|card| (ALL_CARDS[card].sum)}
-    p player_hand
-    p player_score
-    p dealer_hand[0]
-    p "hit or stay"
-    answer = gets.chomp
-    if answer == "hit"
-        player_hand << cards_arr.sample
-        p player_hand
-        p player_score
-
-
-    elsif answer == "stay"
-
-    else 
-    
+    attr_reader :deck, :dealer, :player
+    def initialize
+        @deck = BlackJack.generate_deck
+        @dealer = Dealer.new
+        @player = Player.new
     end
+
+    def deal(answer)
+
+
+
+    end
+
+
+    
+
+
+
+
+    # def game_play
+
+    # max_score = 21
+
+    # cards_arr = ALL_CARDS.keys
+    # player_hand = cards_arr.sample(2)
+    # p player_hand
+    # dealer_hand = cards_arr.sample(2)
+
+    # player_score = player_hand.each {|card| (ALL_CARDS[card].sum)}
+    # p player_hand
+    # p player_score
+    # p dealer_hand[0]
+
+
+    # else 
+
+    # end
 end
 
 # on each turn/hit need to check score against 21 
@@ -62,9 +92,3 @@ end
 
 
 
-#Dealer Class - @hit(if score <= 16), @dealer_score(attr_accessor), 
-#inst method for ace(dealer hits on soft 17)
-#Player Class - where we get user input and do most error handling, @player_score(attr_accessor)
-#inst method for ace(if hand with 11 > 21 -> ace becomes 1)
-
-game_play
