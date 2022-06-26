@@ -27,13 +27,12 @@ class Player
             puts player_score
             puts 'hit or stay'
             answer = gets.chomp
+
             if answer != 'hit' || answer != 'stay'
         rescue ResponseError => e
             puts e.message
         retry
-            player_hand << @deck[0] if answer == 'hit'
-            puts player_hand
-            puts player_score
+            end
         end
     end
 

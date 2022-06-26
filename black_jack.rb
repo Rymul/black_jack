@@ -44,7 +44,16 @@ class BlackJack
     end
 
     def deal(answer)
-
+        player_hand << @deck[0] if answer == 'hit'
+            puts player_hand
+            puts player_score
+        if dealer_score <= 16
+            dealer_hand << @deck[0]
+            puts dealer_hand[0]
+            puts dealer_score
+        elsif dealer_score > 21 && dealer_hand.include?('A')
+            #how to make A of all suit in dealer hand = 1
+            #while not affecting all A's in @deck
 
 
     end
