@@ -1,7 +1,7 @@
 require_relative "bj_player.rb"
 require_relative "bj_dealer.rb"
 
-CARD_VALUES = { 'A' => [1, 11], 'K' => 10, 'Q' => 10, 'J' => 10, 
+CARD_VALUES = { 'A' => 11, 'K' => 10, 'Q' => 10, 'J' => 10, 
 '10' => 10, '9' => 9, '8' => 8, '7' => 7, '6' => 6, 
 '5' => 5, '4' => 4, '3' => 3, '2' => 2 }
 
@@ -43,19 +43,37 @@ class BlackJack
         @player = Player.new
     end
 
+
+    def win?
+
+    end
+
+    def bust?
+
+    end
+
     def deal(answer)
+        puts @player.hand
+        puts @player.score
+        puts @dealer.hand[0]
+
         player_hand << @deck[0] if answer == 'hit'
-            puts player_hand
-            puts player_score
-        if dealer_score <= 16
-            dealer_hand << @deck[0]
-            puts dealer_hand[0]
-            puts dealer_score
-        elsif dealer_score > 21 && dealer_hand.include?('A')
-            #how to make A of all suit in dealer hand = 1
-            #while not affecting all A's in @deck
+            puts @player.hand
+            puts @player.score
+            @deck -= @deck[0]
+        if @dealer.score <= 16
+            @dealer.hand << @deck[0]
+            puts @dealer.hand[0]
+        elsif @dealer.score > 17 && @dealer.hand.include?('A')
+            @dealer.score -= 10
+        end
 
+    end
 
+    def play
+        @player.start_hand
+        @delare.start_hand
+        self.deal(answe)
     end
 
 

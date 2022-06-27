@@ -12,9 +12,16 @@ class Player
     attr_accessor :player_hand
     def initialize
         @hit = hit
-        @player_score = 0
+        @score = 0
         @player_hand = Array.new
     end
+
+    def start_hand
+        @player_hand.push(BlackJack.deck[0], BlackJack.deck[1])
+        BlackJack.deck -= BlackJack.deck[0]
+        BlackJack.deck -= BlackJack.deck[1]
+    end
+        
 
     def score
         
