@@ -43,14 +43,26 @@ class BlackJack
         @player = Player.new
     end
 
-
     def win?
+        if @player.score > @dealer.score && @player.score <= 21
+            puts "You win!"
+            return true
+        else @dealer.score > @player.score && @dealer.score <= 21
+            puts "dealer wins"
+            return false
+        end
 
     end
 
     def bust?
-
+        if @player.score > 21
+            puts "Bust"
+            return true
+        else @dealer.score > 21
+            puts "dealer busts"
+        end
     end
+
 
     def deal(answer)
         puts @player.hand
