@@ -16,7 +16,6 @@ SUITS = ['D', 'H', 'S', 'C']
 
 
 #Black Jack class
-# instance vars = @deck(via generate_deck Class#method), @dealer, @player
 # instance methods = deal(will use hit intance method 
 # - give cards to dealer and player and remove them from the ALL CARDS - use .shuffle and deal first card in deck)
 # instance method = win, lose, bust, hit, play(initialize game), 
@@ -84,7 +83,7 @@ class BlackJack
 
     def play
         @player.start_hand
-        @delare.start_hand
+        @dealer.start_hand
         self.deal(answe)
     end
 
