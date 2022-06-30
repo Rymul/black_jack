@@ -7,12 +7,7 @@ CARD_VALUES = { 'A' => 11, 'K' => 10, 'Q' => 10, 'J' => 10,
 
 SUITS = ['D', 'H', 'S', 'C']
 
-# ALL_CARDS = Hash.new
-# SUITS.each do |suit|
-#     CARD_VALUES.each do |k, v|
-#         ALL_CARDS[k + suit] = v
-#     end
-# end
+
 
 
 #Black Jack class
@@ -42,84 +37,88 @@ class BlackJack
         @player = Player.new
     end
 
-    def win?
-        if @player.score > @dealer.score && @player.score <= 21
-            puts "You win!"
+    def self.player_score
+        self.player_score = @player.player_hand.each {|card| (ALL_CARDS[card].sum)}
+    end
+
+    def dealer_score
+        dealer_score = @dealer.dealer_hand.each {|card| (ALL_CARDS[card].sum)}
+    end
+
+    def win?(player_score, dealer_score)
+        if self.player_score > self.dealer_score && self.player_score <= 21
+            puts "You won the hand!"
             return true
-        else @dealer.score > @player.score && @dealer.score <= 21
-            puts "dealer wins"
+        else self.dealer_score > self.player_score && self.dealer_score <= 21
+            puts "Dealer won the hand."
             return false
         end
-
     end
 
-    def bust?
-        if @player.score > 21
-            puts "Bust"
+    def bust?(player_score, dealer_score)
+        if self.player_score > 21
+            puts "You bust!"
             return true
-        else @dealer.score > 21
-            puts "dealer busts"
+        else self.dealer_score > 21
+            puts "Dealer busted."
         end
     end
-
 
     def deal(answer)
         puts @player.hand
-        puts @player.score
+        puts self.player_score
         puts @dealer.hand[0]
 
-        player_hand << @deck[0] if answer == 'hit'
+        @player.hand << @deck[0] if answer == 'hit'
             puts @player.hand
-            puts @player.score
+            puts self.player_score
             @deck -= @deck[0]
-        if @dealer.score <= 16
+        if @player.score > 21 && @player.hand.include?('A')
+            @player.score -= 10
+        end
+        if self.dealer_score <= 16
             @dealer.hand << @deck[0]
             puts @dealer.hand[0]
-        elsif @dealer.score > 17 && @dealer.hand.include?('A')
-            @dealer.score -= 10
+        elsif self.dealer_score > 17 && @dealer.hand.include?('A')
+            self.dealer_score -= 10
         end
+    end
 
+    def not_enough_cards?
+        total_num_of_cards = @deck.length
+        percent_of_cards_needed = total_num_of_cards * 0.33
+        if total_num_of_cards < percent_of_cards_needed
+            raise "Number of cards in deck too low to continue play. Start new game."
+            return true
+        else
+            false
+        end
+    end
+    
+    def play_again?
+        if win?(player_score, dealer_score) || not_enough_cards? 
+            puts "Game over!"
+            puts "Play again? y/n"
+            answer = gets.chomp
+            if answer == "y"
+                self.play
+            end
+        end
     end
 
     def play
         @player.start_hand
         @dealer.start_hand
-        self.deal(answe)
+        self.deal(@player_move)
+        self.bust?
+        self.win?
+        self.enough_cards?
     end
-
-
     
-
-
-
-
-    # def game_play
-
-    # max_score = 21
-
-    # cards_arr = ALL_CARDS.keys
-    # player_hand = cards_arr.sample(2)
-    # p player_hand
-    # dealer_hand = cards_arr.sample(2)
-
-    # player_score = player_hand.each {|card| (ALL_CARDS[card].sum)}
-    # p player_hand
-    # p player_score
-    # p dealer_hand[0]
-
-
-    # else 
-
-    # end
 end
 
-# on each turn/hit need to check score against 21 
-# how do you choose 11 or 1 for an ace?
-# how do you remove that card (k,v) from the hash -> own method
 
-# need to make messages for "you win the hand", "bust", "dealer wins the hand"
-# play again? y, n
-# error handling for when someing other than hit or stay is input
+
 
 #Black Jack class
 # instance vars = @deck(via generate_deck Class#method), @dealer, @player

@@ -9,7 +9,7 @@ end
 
 
 class Player
-    attr_accessor :player_hand
+    attr_accessor :player_hand, :score, :player_hand
     def initialize
         @hit = hit
         @score = 0
@@ -20,12 +20,6 @@ class Player
         @player_hand.push(BlackJack.deck[0], BlackJack.deck[1])
         BlackJack.deck -= BlackJack.deck[0]
         BlackJack.deck -= BlackJack.deck[1]
-    end
-        
-
-    def score
-        
-
     end
 
     def player_move
