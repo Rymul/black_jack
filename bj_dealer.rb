@@ -1,5 +1,3 @@
-
-
 class Dealer
     attr_accessor :dealer_score, :dealer_hand
    def initialize

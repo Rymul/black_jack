@@ -9,14 +9,6 @@ SUITS = ['D', 'H', 'S', 'C']
 
 
 
-
-#Black Jack class
-# instance methods = deal(will use hit intance method 
-# - give cards to dealer and player and remove them from the ALL CARDS - use .shuffle and deal first card in deck)
-# instance method = win, lose, bust, hit, play(initialize game), 
-# inst method(after every round need to check num_cards to see if > .33 * num_cards)
-
-
 class BlackJack
 
     def self.generate_deck
@@ -118,14 +110,6 @@ class BlackJack
 end
 
 
-
-
-#Black Jack class
-# instance vars = @deck(via generate_deck Class#method), @dealer, @player
-# instance methods = deal(will use hit intance method 
-# - give cards to dealer and player and remove them from the ALL CARDS - use .shuffle and deal first card in deck)
-# instance method = win, lose, bust, hit, play(initialize game), 
-# inst method(after every round need to check num_cards to see if > .33 * num_cards)
 
 
 

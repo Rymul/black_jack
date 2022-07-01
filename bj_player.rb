@@ -1,6 +1,3 @@
-#Player Class - where we get user input and do most error handling, @player_score(attr_accessor)
-#inst method for ace(if hand with 11 > 21 -> ace becomes 1)
-
 class ResponseError < StandardError
     def message
       'That is an invalide response. Try again.'
