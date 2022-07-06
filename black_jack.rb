@@ -5,17 +5,17 @@ CARD_VALUES = { 'A' => 11, 'K' => 10, 'Q' => 10, 'J' => 10,
 '10' => 10, '9' => 9, '8' => 8, '7' => 7, '6' => 6, 
 '5' => 5, '4' => 4, '3' => 3, '2' => 2 }
 
-SUITS = ['D', 'H', 'S', 'C']
+# SUITS = ['D', 'H', 'S', 'C']
 
 
 
 class BlackJack
 
-    def self.generate_deck
+    def self.generate_deck(card_values, suits)
         cards_arr = []
         all_cards = Hash.new
-        SUITS.each do |suit|
-            CARD_VALUES.each do |k, v|
+        suits.each do |suit|
+            card_values.each do |k, v|
                 all_cards[k + suit] = v
             end
         end
@@ -24,28 +24,33 @@ class BlackJack
     end
 
     attr_reader :deck, :dealer, :player
-    def initialize
-        @deck = BlackJack.generate_deck
+    def initialize(card_values, suits)
+        @deck = BlackJack.generate_deck(card_values, suits)
         @dealer = Dealer.new
-        @dealer_hand = [self.dealer_start_hand]
+        @dealer_hand = [] #[self.dealer_start_hand]
         @player = Player.new
-        @player_hand = [self.player_start_hand]
+        @player_hand = [] #[self.player_start_hand]
     end
 
     def player_start_hand
-        @player_hand.push(@deck[0], @deck[1])
-        @deck.delete(@deck[0])
-        @deck.delete(@deck[1])
+        @player_hand.push(self.deck[0], self.deck[1])
+        self.deck.delete(self.deck[0])
+        self.deck.delete(self.deck[1])
     end
 
     def player_score
-        player_score = @player_hand.each {|card| (CARD_VALUES[card].sum)}
+        # player_score = 
+        sum = 0
+        @player_hand.each do |card| 
+           sum += CARD_VALUES[card]
+        end
+        sum
     end
 
     def dealer_start_hand
-        @player_hand.push(@deck[0], @deck[1])
-        @deck.delete(@deck[0])
-        @deck.delete(@deck[1])
+        @player_hand.push(self.deck[0], self.deck[1])
+        self.deck.delete(self.deck[0])
+        self.deck.delete(self.deck[1])
      end
 
      def dealer_score
@@ -76,7 +81,7 @@ class BlackJack
         puts self.player_score
         puts @dealer_hand[0]
 
-        @player_hand << @deck[0] if answer == 'hit'
+        @player_hand << deck[0] if answer == 'hit'
             puts @player_hand
             puts self.player_score
             @deck -= @deck[0]
@@ -123,7 +128,12 @@ class BlackJack
     end
 end
 
-bj = BlackJack.new
+card_values = { 'A' => 11, 'K' => 10, 'Q' => 10, 'J' => 10, 
+    '10' => 10, '9' => 9, '8' => 8, '7' => 7, '6' => 6, 
+    '5' => 5, '4' => 4, '3' => 3, '2' => 2 }
+    
+suits = ['D', 'H', 'S', 'C']
+bj = BlackJack.new(card_values, suits)
 bj.play
 
 
